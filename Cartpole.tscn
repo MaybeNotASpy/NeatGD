@@ -1,0 +1,199 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Cart.gd" type="Script" id=1]
+[ext_resource path="res://Pole.gd" type="Script" id=3]
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+background_color = Color( 1, 1, 1, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_unshaded = true
+albedo_color = Color( 0.27451, 0.27451, 0.298039, 1 )
+
+[sub_resource type="CubeMesh" id=3]
+material = SubResource( 4 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.5, 2.5, 10 )
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_unshaded = true
+albedo_color = Color( 0.823529, 0.815686, 0.890196, 1 )
+
+[sub_resource type="CubeMesh" id=7]
+material = SubResource( 6 )
+size = Vector3( 1, 5, 20 )
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 1, 5, 1 )
+
+[sub_resource type="SpatialMaterial" id=13]
+flags_unshaded = true
+albedo_color = Color( 0.435294, 0.462745, 0.870588, 1 )
+
+[sub_resource type="CubeMesh" id=11]
+material = SubResource( 13 )
+size = Vector3( 2, 10, 2 )
+
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 1, 25, 1 )
+
+[sub_resource type="SpatialMaterial" id=12]
+flags_unshaded = true
+albedo_color = Color( 0.94902, 0.458824, 0.458824, 1 )
+
+[sub_resource type="CubeMesh" id=8]
+material = SubResource( 12 )
+size = Vector3( 2, 50, 2 )
+
+[node name="Root" type="Spatial"]
+
+[node name="Env" type="Spatial" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
+environment = SubResource( 1 )
+
+[node name="Camera" type="Camera" parent="Env"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -50, 20, 0 )
+projection = 1
+size = 80.0
+
+[node name="GUI" type="MarginContainer" parent="Env"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 270.0
+margin_bottom = 128.0
+
+[node name="Inputs" type="VBoxContainer" parent="Env/GUI"]
+margin_right = 250.0
+margin_bottom = 108.0
+
+[node name="Pole 1 Angle" type="HBoxContainer" parent="Env/GUI/Inputs"]
+margin_right = 250.0
+margin_bottom = 24.0
+
+[node name="Title" type="RichTextLabel" parent="Env/GUI/Inputs/Pole 1 Angle"]
+margin_right = 172.0
+margin_bottom = 24.0
+rect_clip_content = false
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+bbcode_enabled = true
+bbcode_text = "[center]Pole 1 Angle  (degrees): [/center]"
+text = "Pole 1 Angle  (degrees): "
+scroll_active = false
+
+[node name="Value" type="SpinBox" parent="Env/GUI/Inputs/Pole 1 Angle"]
+margin_left = 176.0
+margin_right = 250.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+min_value = -32.0
+max_value = 32.0
+value = 1.0
+align = 2
+
+[node name="Pole 2 Angle" type="HBoxContainer" parent="Env/GUI/Inputs"]
+margin_top = 28.0
+margin_right = 250.0
+margin_bottom = 52.0
+
+[node name="Title" type="RichTextLabel" parent="Env/GUI/Inputs/Pole 2 Angle"]
+margin_right = 172.0
+margin_bottom = 24.0
+rect_clip_content = false
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+bbcode_enabled = true
+bbcode_text = "[center]Pole 2 Angle (degrees): [/center]"
+text = "Pole 2 Angle (degrees): "
+scroll_active = false
+
+[node name="Value" type="SpinBox" parent="Env/GUI/Inputs/Pole 2 Angle"]
+margin_left = 176.0
+margin_right = 250.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+min_value = -32.0
+max_value = 32.0
+align = 2
+
+[node name="Ground" type="Spatial" parent="Env"]
+transform = Transform( 0.1, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Env/Ground"]
+mesh = SubResource( 3 )
+
+[node name="Cart" type="RigidBody" parent="Env"]
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Env/Cart"]
+shape = SubResource( 5 )
+disabled = true
+
+[node name="MeshInstance" type="MeshInstance" parent="Env/Cart"]
+mesh = SubResource( 7 )
+skeleton = NodePath("../CollisionShape")
+
+[node name="Pole1" type="RigidBody" parent="Env"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -5 )
+collision_layer = 2
+collision_mask = 2
+mass = 0.5
+gravity_scale = 14.0
+can_sleep = false
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+angular_damp = 0.5
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Env/Pole1"]
+shape = SubResource( 10 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Env/Pole1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+visible = false
+mesh = SubResource( 11 )
+
+[node name="Pole2" type="RigidBody" parent="Env"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5 )
+collision_layer = 4
+collision_mask = 4
+input_ray_pickable = false
+mass = 0.5
+gravity_scale = 14.0
+can_sleep = false
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+angular_damp = 0.5
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Env/Pole2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0 )
+shape = SubResource( 9 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Env/Pole2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, 0 )
+visible = false
+mesh = SubResource( 8 )
+
+[node name="HingePole2" type="HingeJoint" parent="Env"]
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 5 )
+nodes/node_a = NodePath("../Cart")
+nodes/node_b = NodePath("../Pole2")
+motor/target_velocity = 78.67
+
+[node name="HingePole1" type="HingeJoint" parent="Env"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -5 )
+nodes/node_a = NodePath("../Cart")
+nodes/node_b = NodePath("../Pole1")
+motor/target_velocity = 78.67
