@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Cart.gd" type="Script" id=1]
+[ext_resource path="res://Env.gd" type="Script" id=2]
 [ext_resource path="res://Pole.gd" type="Script" id=3]
 
 [sub_resource type="Environment" id=1]
@@ -26,17 +27,6 @@ albedo_color = Color( 0.823529, 0.815686, 0.890196, 1 )
 material = SubResource( 6 )
 size = Vector3( 1, 5, 20 )
 
-[sub_resource type="BoxShape" id=10]
-extents = Vector3( 1, 5, 1 )
-
-[sub_resource type="SpatialMaterial" id=13]
-flags_unshaded = true
-albedo_color = Color( 0.435294, 0.462745, 0.870588, 1 )
-
-[sub_resource type="CubeMesh" id=11]
-material = SubResource( 13 )
-size = Vector3( 2, 10, 2 )
-
 [sub_resource type="BoxShape" id=9]
 extents = Vector3( 1, 25, 1 )
 
@@ -48,9 +38,21 @@ albedo_color = Color( 0.94902, 0.458824, 0.458824, 1 )
 material = SubResource( 12 )
 size = Vector3( 2, 50, 2 )
 
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 1, 5, 1 )
+
+[sub_resource type="SpatialMaterial" id=13]
+flags_unshaded = true
+albedo_color = Color( 0.435294, 0.462745, 0.870588, 1 )
+
+[sub_resource type="CubeMesh" id=11]
+material = SubResource( 13 )
+size = Vector3( 2, 10, 2 )
+
 [node name="Root" type="Spatial"]
 
 [node name="Env" type="Spatial" parent="."]
+script = ExtResource( 2 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Env"]
 environment = SubResource( 1 )
@@ -60,34 +62,39 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -50, 20
 projection = 1
 size = 80.0
 
-[node name="GUI" type="MarginContainer" parent="Env"]
+[node name="Input GUI" type="MarginContainer" parent="Env"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 270.0
-margin_bottom = 128.0
+margin_right = 320.0
+margin_bottom = 120.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Inputs" type="VBoxContainer" parent="Env/GUI"]
-margin_right = 250.0
-margin_bottom = 108.0
+[node name="Inputs" type="VBoxContainer" parent="Env/Input GUI"]
+margin_right = 300.0
+margin_bottom = 104.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Pole 1 Angle" type="HBoxContainer" parent="Env/GUI/Inputs"]
-margin_right = 250.0
+[node name="Pole 1 Angle" type="HBoxContainer" parent="Env/Input GUI/Inputs"]
+margin_right = 300.0
 margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Title" type="RichTextLabel" parent="Env/GUI/Inputs/Pole 1 Angle"]
-margin_right = 172.0
-margin_bottom = 24.0
-rect_clip_content = false
+[node name="Title" type="Label" parent="Env/Input GUI/Inputs/Pole 1 Angle"]
+margin_top = 5.0
+margin_right = 207.0
+margin_bottom = 19.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.7
-bbcode_enabled = true
-bbcode_text = "[center]Pole 1 Angle  (degrees): [/center]"
-text = "Pole 1 Angle  (degrees): "
-scroll_active = false
+text = "Pole 1 Angle (degrees): "
+align = 1
+valign = 1
 
-[node name="Value" type="SpinBox" parent="Env/GUI/Inputs/Pole 1 Angle"]
-margin_left = 176.0
-margin_right = 250.0
+[node name="Value" type="SpinBox" parent="Env/Input GUI/Inputs/Pole 1 Angle"]
+margin_left = 211.0
+margin_right = 300.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
@@ -96,31 +103,280 @@ max_value = 32.0
 value = 1.0
 align = 2
 
-[node name="Pole 2 Angle" type="HBoxContainer" parent="Env/GUI/Inputs"]
+[node name="Pole 2 Angle" type="HBoxContainer" parent="Env/Input GUI/Inputs"]
 margin_top = 28.0
-margin_right = 250.0
+margin_right = 300.0
 margin_bottom = 52.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="Title" type="RichTextLabel" parent="Env/GUI/Inputs/Pole 2 Angle"]
-margin_right = 172.0
-margin_bottom = 24.0
-rect_clip_content = false
+[node name="Title" type="Label" parent="Env/Input GUI/Inputs/Pole 2 Angle"]
+margin_top = 5.0
+margin_right = 207.0
+margin_bottom = 19.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.7
-bbcode_enabled = true
-bbcode_text = "[center]Pole 2 Angle (degrees): [/center]"
 text = "Pole 2 Angle (degrees): "
-scroll_active = false
+align = 1
+valign = 1
 
-[node name="Value" type="SpinBox" parent="Env/GUI/Inputs/Pole 2 Angle"]
-margin_left = 176.0
-margin_right = 250.0
+[node name="Value" type="SpinBox" parent="Env/Input GUI/Inputs/Pole 2 Angle"]
+margin_left = 211.0
+margin_right = 300.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
 min_value = -32.0
 max_value = 32.0
 align = 2
+
+[node name="Pole Angle Limit" type="HBoxContainer" parent="Env/Input GUI/Inputs"]
+margin_top = 56.0
+margin_right = 300.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="Env/Input GUI/Inputs/Pole Angle Limit"]
+margin_top = 5.0
+margin_right = 207.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+text = "Pole Angle Limit (degrees): "
+align = 1
+valign = 1
+
+[node name="Value" type="SpinBox" parent="Env/Input GUI/Inputs/Pole Angle Limit"]
+margin_left = 211.0
+margin_right = 300.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+max_value = 90.0
+value = 45.0
+align = 2
+
+[node name="Enable" type="HBoxContainer" parent="Env/Input GUI/Inputs"]
+margin_top = 84.0
+margin_right = 300.0
+margin_bottom = 104.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="Env/Input GUI/Inputs/Enable"]
+margin_top = 3.0
+margin_right = 207.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+text = "Enable Simulation:"
+align = 1
+valign = 1
+
+[node name="Value" type="Button" parent="Env/Input GUI/Inputs/Enable"]
+margin_left = 211.0
+margin_right = 300.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+toggle_mode = true
+align = 2
+
+[node name="Panel" type="Panel" parent="Env/Input GUI"]
+show_behind_parent = true
+margin_right = 300.0
+margin_bottom = 104.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Output GUI" type="MarginContainer" parent="Env"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -320.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = 220.0
+
+[node name="Outputs" type="VBoxContainer" parent="Env/Output GUI"]
+margin_right = 300.0
+margin_bottom = 200.0
+alignment = 2
+
+[node name="Pole 1 Angle" type="HBoxContainer" parent="Env/Output GUI/Outputs"]
+margin_right = 300.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 15
+
+[node name="Title" type="Label" parent="Env/Output GUI/Outputs/Pole 1 Angle"]
+margin_top = 8.0
+margin_right = 207.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+text = "Pole 1 Angle (degrees): "
+align = 1
+valign = 1
+
+[node name="Value" type="Label" parent="Env/Output GUI/Outputs/Pole 1 Angle"]
+margin_left = 211.0
+margin_top = 8.0
+margin_right = 300.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+text = "d"
+align = 1
+valign = 1
+
+[node name="Pole 1 Angular Velocity" type="HBoxContainer" parent="Env/Output GUI/Outputs"]
+margin_top = 34.0
+margin_right = 300.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 15
+
+[node name="Title" type="Label" parent="Env/Output GUI/Outputs/Pole 1 Angular Velocity"]
+margin_top = 8.0
+margin_right = 207.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+text = "Pole 1 Ang. Vel. (degrees/s): "
+align = 1
+valign = 1
+
+[node name="Value" type="Label" parent="Env/Output GUI/Outputs/Pole 1 Angular Velocity"]
+margin_left = 211.0
+margin_top = 8.0
+margin_right = 300.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+text = "d"
+align = 1
+valign = 1
+
+[node name="Pole 2 Angle" type="HBoxContainer" parent="Env/Output GUI/Outputs"]
+margin_top = 68.0
+margin_right = 300.0
+margin_bottom = 98.0
+size_flags_horizontal = 3
+size_flags_vertical = 15
+
+[node name="Title" type="Label" parent="Env/Output GUI/Outputs/Pole 2 Angle"]
+margin_top = 8.0
+margin_right = 207.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+text = "Pole 2 Angle (degrees): "
+align = 1
+valign = 1
+
+[node name="Value" type="Label" parent="Env/Output GUI/Outputs/Pole 2 Angle"]
+margin_left = 211.0
+margin_top = 8.0
+margin_right = 300.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+text = "d"
+align = 1
+valign = 1
+
+[node name="Pole 2 Angular Velocity" type="HBoxContainer" parent="Env/Output GUI/Outputs"]
+margin_top = 102.0
+margin_right = 300.0
+margin_bottom = 132.0
+size_flags_horizontal = 3
+size_flags_vertical = 15
+
+[node name="Title" type="Label" parent="Env/Output GUI/Outputs/Pole 2 Angular Velocity"]
+margin_top = 8.0
+margin_right = 207.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+text = "Pole 2 Ang. Vel. (degrees/s): "
+align = 1
+valign = 1
+
+[node name="Value" type="Label" parent="Env/Output GUI/Outputs/Pole 2 Angular Velocity"]
+margin_left = 211.0
+margin_top = 8.0
+margin_right = 300.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+text = "d"
+align = 1
+valign = 1
+
+[node name="Cart Position" type="HBoxContainer" parent="Env/Output GUI/Outputs"]
+margin_top = 136.0
+margin_right = 300.0
+margin_bottom = 166.0
+size_flags_horizontal = 3
+size_flags_vertical = 15
+
+[node name="Title" type="Label" parent="Env/Output GUI/Outputs/Cart Position"]
+margin_top = 8.0
+margin_right = 207.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+text = "Cart Position (m): "
+align = 1
+valign = 1
+
+[node name="Value" type="Label" parent="Env/Output GUI/Outputs/Cart Position"]
+margin_left = 211.0
+margin_top = 8.0
+margin_right = 300.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+text = "d"
+align = 1
+valign = 1
+
+[node name="Cart Velocity" type="HBoxContainer" parent="Env/Output GUI/Outputs"]
+margin_top = 170.0
+margin_right = 300.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 15
+
+[node name="Title" type="Label" parent="Env/Output GUI/Outputs/Cart Velocity"]
+margin_top = 8.0
+margin_right = 207.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+text = "Cart Velocity (m/s) "
+align = 1
+valign = 1
+
+[node name="Value" type="Label" parent="Env/Output GUI/Outputs/Cart Velocity"]
+margin_left = 211.0
+margin_top = 8.0
+margin_right = 300.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+text = "d"
+align = 1
+valign = 1
+
+[node name="Panel" type="Panel" parent="Env/Output GUI"]
+show_behind_parent = true
+margin_right = 300.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Ground" type="Spatial" parent="Env"]
 transform = Transform( 0.1, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
@@ -144,28 +400,17 @@ disabled = true
 mesh = SubResource( 7 )
 skeleton = NodePath("../CollisionShape")
 
-[node name="Pole1" type="RigidBody" parent="Env"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -5 )
-collision_layer = 2
-collision_mask = 2
-mass = 0.5
-gravity_scale = 14.0
-can_sleep = false
-axis_lock_angular_y = true
-axis_lock_angular_z = true
-angular_damp = 0.5
-script = ExtResource( 3 )
+[node name="HingePole2" type="HingeJoint" parent="Env"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 5 )
+nodes/node_a = NodePath("../Cart")
+nodes/node_b = NodePath("Pole2")
+angular_limit/enable = true
+angular_limit/upper = 45.0
+angular_limit/lower = -45.0
+motor/target_velocity = 78.67
 
-[node name="CollisionShape" type="CollisionShape" parent="Env/Pole1"]
-shape = SubResource( 10 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Env/Pole1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
-visible = false
-mesh = SubResource( 11 )
-
-[node name="Pole2" type="RigidBody" parent="Env"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5 )
+[node name="Pole2" type="RigidBody" parent="Env/HingePole2"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 5, 0 )
 collision_layer = 4
 collision_mask = 4
 input_ray_pickable = false
@@ -177,23 +422,41 @@ axis_lock_angular_z = true
 angular_damp = 0.5
 script = ExtResource( 3 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Env/Pole2"]
+[node name="CollisionShape" type="CollisionShape" parent="Env/HingePole2/Pole2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0 )
 shape = SubResource( 9 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Env/Pole2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, 0 )
-visible = false
+[node name="MeshInstance" type="MeshInstance" parent="Env/HingePole2/Pole2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0 )
 mesh = SubResource( 8 )
 
-[node name="HingePole2" type="HingeJoint" parent="Env"]
-transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0, 5 )
+[node name="HingePole1" type="HingeJoint" parent="Env"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -5 )
 nodes/node_a = NodePath("../Cart")
-nodes/node_b = NodePath("../Pole2")
+nodes/node_b = NodePath("Pole1")
+angular_limit/enable = true
+angular_limit/upper = 45.0
+angular_limit/lower = -45.0
 motor/target_velocity = 78.67
 
-[node name="HingePole1" type="HingeJoint" parent="Env"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -5 )
-nodes/node_a = NodePath("../Cart")
-nodes/node_b = NodePath("../Pole1")
-motor/target_velocity = 78.67
+[node name="Pole1" type="RigidBody" parent="Env/HingePole1"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 5, 0 )
+collision_layer = 2
+collision_mask = 2
+mass = 0.5
+gravity_scale = 14.0
+can_sleep = false
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+angular_damp = 0.5
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Env/HingePole1/Pole1"]
+shape = SubResource( 10 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Env/HingePole1/Pole1"]
+mesh = SubResource( 11 )
+
+[node name="NEAT" type="Node" parent="."]
+
+[connection signal="toggled" from="Env/Input GUI/Inputs/Enable/Value" to="Env" method="_on_enable_toggle"]
